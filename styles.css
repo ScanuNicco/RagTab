@@ -1,0 +1,88 @@
+#clockbox {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10vw;
+    color: white;
+    padding: 50px;
+	margin-top: 10vh;
+    text-shadow: 2px 2px 2px rgb(0 0 0 / 70%);
+	text-align: center;
+}
+
+#weatherbox {
+	color: white;
+	font: 'Roboto', sans-serif;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	border-radius: 5px;
+	background: rgba(0, 0, 0, .3);
+	backdrop-filter: blur(10px);
+	padding: 10px;
+}
+
+#weatherbox h1 {
+	display: inline-block;
+	font-size: 40px;
+	margin: 10px;
+	float: right;
+}
+
+#weatherbox h2 {
+	margin: 5px;
+}
+
+#icon {
+	filter: invert(1);
+	display: inline-block;
+	height: 70px;
+}
+
+body {
+	background-size: cover;
+	font-family: sans-serif;
+}
+
+a {
+	color: white;
+	font-size: 1.2em;
+}
+
+a:visited {
+	color: white;
+}
+
+input, button {
+	color: white;
+	border-radius: 5px;
+	background: rgba(0, 0, 0, .3);
+	backdrop-filter: blur(10px);
+	padding: 10px;
+	margin: 5px;
+	border: none;
+	transition: .5s;
+}
+
+button:hover {
+	background: rgba(255, 255, 255, .3);
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ddd;
+  opacity: 1; /* Firefox */
+}
+
+#todoButt {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
+#todo {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	width: 50vw;
+	height: 50vh;
+	border: none;
+	border-radius: 5px;
+}

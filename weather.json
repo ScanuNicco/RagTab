@@ -1,0 +1,245 @@
+﻿{
+	"_comment": "icons from: https://mpetroff.net/2012/09/kindle-weather-display/",
+	"condition": [
+		{
+			"code": "395",
+			"description": "Moderate or heavy snow in area with thunder",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "392",
+			"description": "Patchy light snow in area with thunder",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "389",
+			"description": "Moderate or heavy rain in area with thunder",
+			"icon": "tsra.svg"
+			},
+		{
+			"code": "386",
+			"description": "Patchy light rain in area with thunder",
+			"icon": "hi_tsra.svg"
+			},
+		{
+			"code": "377",
+			"description": "Moderate or heavy showers of ice pellets",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "374",
+			"description": "Light showers of ice pellets",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "371",
+			"description": "Moderate or heavy snow showers",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "368",
+			"description": "Light snow showers",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "365",
+			"description": "Moderate or heavy sleet showers",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "362",
+			"description": "Light sleet showers",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "359",
+			"description": "Torrential rain shower",
+			"icon": "ra.svg"
+			},
+		{
+			"code": "356",
+			"description": "Moderate or heavy rain shower",
+			"icon": "ra1.svg"
+			},
+		{
+			"code": "353",
+			"description": "Light rain shower",
+			"icon": "shra.svg"
+			},
+		{
+			"code": "350",
+			"description": "Ice pellets",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "338",
+			"description": "Heavy snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "335",
+			"description": "Patchy heavy snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "332",
+			"description": "Moderate snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "329",
+			"description": "Patchy moderate snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "326",
+			"description": "Light snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "323",
+			"description": "Patchy light snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "320",
+			"description": "Moderate or heavy sleet",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "317",
+			"description": "Light sleet",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "314",
+			"description": "Moderate or Heavy freezing rain",
+			"icon": "fzra.svg"
+			},
+		{
+			"code": "311",
+			"description": "Light freezing rain",
+			"icon": "fzra.svg"
+			},
+		{
+			"code": "308",
+			"description": "Heavy rain",
+			"icon": "ra.svg"
+			},
+		{
+			"code": "305",
+			"description": "Heavy rain at times",
+			"icon": "hi_shwrs.svg"
+			},
+		{
+			"code": "302",
+			"description": "Moderate rain",
+			"icon": "ra1.svg"
+			},
+		{
+			"code": "299",
+			"description": "Moderate rain at times",
+			"icon": "hi_shwrs.svg"
+			},
+		{
+			"code": "296",
+			"description": "Light rain",
+			"icon": "shra.svg"
+			},
+		{
+			"code": "293",
+			"description": "Patchy light rain",
+			"icon": "hi_shwrs.svg"
+			},
+		{
+			"code": "284",
+			"description": "Heavy freezing drizzle",
+			"icon": "fzra.svg"
+			},
+		{
+			"code": "281",
+			"description": "Freezing drizzle",
+			"icon": "fzra.svg"
+			},
+		{
+			"code": "266",
+			"description": "Light drizzle",
+			"icon": "shra.svg"
+			},
+		{
+			"code": "263",
+			"description": "Patchy light drizzle",
+			"icon": "hi_shwrs.svg"
+			},
+		{
+			"code": "260",
+			"description": "Freezing fog",
+			"icon": "fg.svg"
+			},
+		{
+			"code": "248",
+			"description": "Fog",
+			"icon": "fg.svg"
+			},
+		{
+			"code": "230",
+			"description": "Blizzard",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "227",
+			"description": "Blowing snow",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "200",
+			"description": "Thundery outbreaks in nearby",
+			"icon": "hi_tsra"
+			},
+		{
+			"code": "185",
+			"description": "Patchy freezing drizzle nearby",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "182",
+			"description": "Patchy sleet nearby",
+			"icon": "ip.svg"
+			},
+		{
+			"code": "179",
+			"description": "Patchy snow nearby",
+			"icon": "sn.svg"
+			},
+		{
+			"code": "176",
+			"description": "Patchy rain nearby",
+			"icon": "hi_shwrs.svg"
+			},
+		{
+			"code": "143",
+			"description": "Mist",
+			"icon": "mist.svg"
+			},
+		{
+			"code": "122",
+			"description": "Overcast",
+			"icon": "ovc.svg"
+			},
+		{
+			"code": "119",
+			"description": "Cloudy",
+			"icon": "bkn.svg"
+			},
+		{
+			"code": "116",
+			"description": "Partly Cloudy",
+			"icon": "sct.svg"
+			},
+		{
+			"code": "113",
+			"description": "Clear/Sunny",
+			"icon": "skc.svg"
+			}
+		]
+}
