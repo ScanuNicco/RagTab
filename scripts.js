@@ -1,5 +1,3 @@
-const NUMBER_OF_IMAGES = 20;
-
 function GetClock() {
 	var d = new Date();
 	var nhour = d.getHours(),
@@ -26,7 +24,11 @@ window.onload = function () {
 	GetClock();
 	setInterval(GetClock, 1000);
 	document.body.style.backgroundImage = "url('https://scanuproductions.com/images/gallery/gallery" + Math.floor((Math.random() * NUMBER_OF_IMAGES) + 1) + ".jpg')";
-	httpGetAsync('https://wttr.in?format=j1', showWeather);
+	if(WEATHER_ENABLED){
+		httpGetAsync('https://wttr.in?format=j1', showWeather);
+	} else {
+		document.getElementById("weatherbox").style.display = "none";
+	}
 }
 
 function httpGetAsync(theUrl, callback) {
@@ -41,7 +43,6 @@ function httpGetAsync(theUrl, callback) {
 
 var weatherCode = 113; //Default to sunny
 function showWeather(result) {
-	console.log(result);
 	var weather = JSON.parse(result);
 	weatherCode = weather.current_condition[0].weatherCode;
 	document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
@@ -66,9 +67,12 @@ function duck(){
 }
 
 document.getElementById("todoButt").addEventListener("click", function(){
-	console.log("test");
 	var todo = document.createElement("iframe");
 	todo.id = "todo";
-	todo.src = "https://scanuproductions.com/webtools/To-Do/?embedded=true";
+	todo.src = TODO_URL;
 	document.body.appendChild(todo);
 });
+
+if(!TODO_ENABLED){
+	document.getElementById("todoButt").style.display = "none";
+}
