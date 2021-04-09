@@ -26,7 +26,7 @@ window.onload = function () {
 	GetClock();
 	setInterval(GetClock, 1000);
 	document.body.style.backgroundImage = "url('https://scanuproductions.com/images/gallery/gallery" + Math.floor((Math.random() * NUMBER_OF_IMAGES) + 1) + ".jpg')";
-	httpGetAsync('https://wttr.in?format=j1', showWeather)
+	httpGetAsync('https://wttr.in?format=j1', showWeather);
 }
 
 function httpGetAsync(theUrl, callback) {
@@ -46,7 +46,7 @@ function showWeather(result) {
 	weatherCode = weather.current_condition[0].weatherCode;
 	document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
 	document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
-	httpGetAsync(chrome.runtime.getURL('weather.json'), showIcon)
+	httpGetAsync(chrome.runtime.getURL('weather.json'), showIcon);
 }
 
 function showIcon(result){
