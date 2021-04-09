@@ -54,6 +54,7 @@ function showIcon(result){
 	for(i = 0; i < icons.length; i++){
 		if(icons[i].code == weatherCode){
 			document.getElementById("icon").src = "Icons/" + icons[i].icon;
+			document.getElementById("weatherInfo").innerText = icons[i].description;
 		}
 	}
 }

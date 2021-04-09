@@ -86,3 +86,18 @@ button:hover {
 	border: none;
 	border-radius: 5px;
 }
+
+#icon:hover + #weatherInfo {
+	display: block;
+}
+
+#weatherInfo {
+	display: none;
+	color: black;
+	background: white;
+	position: absolute;
+	top: 20px;
+	left: 5px;
+	border-radius: 5px;
+	padding: 5px;
+}
