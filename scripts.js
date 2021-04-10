@@ -25,7 +25,7 @@ window.onload = function () {
 	setInterval(GetClock, 1000);
 	document.body.style.backgroundImage = "url('https://scanuproductions.com/images/gallery/gallery" + Math.floor((Math.random() * NUMBER_OF_IMAGES) + 1) + ".jpg')";
 	if(WEATHER_ENABLED){
-		httpGetAsync('https://wttr.in?format=j1', showWeather);
+		httpGetAsync('https://wttr.in/' + WEATHER_LOCATION + '?format=j1', showWeather);
 	} else {
 		document.getElementById("weatherbox").style.display = "none";
 	}

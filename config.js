@@ -9,3 +9,6 @@ const TODO_URL = "https://scanuproductions.com/webtools/To-Do/?embedded=true&tra
 
 //Whether the weather widget is enabled or not. Weather data is retrieved from wttr.in. If you are concerned about privacy you can disable the widged to prevent your new-tab page from connecting to wttr.in.
 const WEATHER_ENABLED = true; //Default Value: true
+
+//What location to provide to wttr.in when getting weather data. If left blank, wttr.in will use your current location. Example Values: "london", "iowa-city", "48.8755546,-87.6244212"
+const WEATHER_LOCATION = ""; //Default Value: ""
