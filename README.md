@@ -22,12 +22,12 @@ As long as you are familiar with JSON, you should be able to add any search engi
 1) Search something on the website you want to add.
 2) Get everything in the URL that comes before the search term. In this case my URL was `https://sfbay.craigslist.org/d/for-sale/search/sss?query=vr%20headset&sort=rel`, so I got `https://sfbay.craigslist.org/d/for-sale/search/sss?query=`.
 3) Add the following to engines.json, make sure to put it before the closing `]`:
-> {
+``` {
 		"name": "[Search Engine Name]",
 		"url": "[URL From Step 2]"
-  }
+  }```
 4) Make sure your engines.json looks something like this:
-> [
+``` [
 	{
 		"name": "DuckDuckGo",
 		"url": "https://duckduckgo.com?q="
@@ -44,6 +44,6 @@ As long as you are familiar with JSON, you should be able to add any search engi
 		"name": "Craigslist",
 		"url": "https://sfbay.craigslist.org/d/for-sale/search/sss?query="
 	}
- ]
+ ]```
 Note that the last item does not have a comma at the end. You may want to use an online JSON validator.
 5) Finally, you need to set SEARCH_ENGINE in config.js. Computers start counting at 0, not 1, so in my example I set SEARCH_ENGINE to 3 for Craigslist.
