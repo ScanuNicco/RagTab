@@ -29,6 +29,7 @@ window.onload = function () {
 	} else {
 		document.getElementById("weatherbox").style.display = "none";
 	}
+	httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
 }
 
 function httpGetAsync(theUrl, callback) {
@@ -60,10 +61,17 @@ function showIcon(result){
 	}
 }
 
+var searchEngineURL = "https://duckduckgo.com?q=";
+function setupSearch(result){
+	var engines = JSON.parse(result);
+	searchEngineURL = engines[SEARCH_ENGINE].url;
+	document.getElementById("search").placeholder = "Search with " + engines[SEARCH_ENGINE].name;
+}
+
 document.getElementById("duckButt").addEventListener("click", duck);
 function duck(){
 	var term = document.getElementById("search").value;
-	location.href = "https://duckduckgo.com?q=" + term;
+	location.href = searchEngineURL + term;
 }
 
 document.getElementById("todoButt").addEventListener("click", function(){

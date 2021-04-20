@@ -1,5 +1,5 @@
 //The number of images in the scanuproductions.com image gallery, you don't need to change this
-const NUMBER_OF_IMAGES = 24; //Default Value: 20
+const NUMBER_OF_IMAGES = 24; //Default Value: 24
 
 //Whether the to-do list is enabled or not.
 const TODO_ENABLED = true; //Default Value: true
@@ -12,3 +12,6 @@ const WEATHER_ENABLED = true; //Default Value: true
 
 //What location to provide to wttr.in when getting weather data. If left blank, wttr.in will use your current location. Example Values: "london", "iowa-city", "48.8755546,-87.6244212"
 const WEATHER_LOCATION = ""; //Default Value: ""
+
+//What search engine to use. Search engines are defined in engines.json. 0 is DuckDuckGo, 1 is Google, 2 is Wikipedia
+const SEARCH_ENGINE = 0; //Default Value: 0
