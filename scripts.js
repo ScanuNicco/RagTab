@@ -23,7 +23,7 @@ function GetClock() {
 window.onload = function () {
 	GetClock();
 	setInterval(GetClock, 1000);
-	document.body.style.backgroundImage = "url('https://scanuproductions.com/images/gallery/gallery" + Math.floor((Math.random() * NUMBER_OF_IMAGES) + 1) + ".jpg')";
+	httpGetAsync(chrome.runtime.getURL('backgrounds.json'), setupBackground);
 	if(WEATHER_ENABLED){
 		httpGetAsync('https://wttr.in/' + WEATHER_LOCATION + '?format=j1', showWeather);
 	} else {
@@ -40,6 +40,14 @@ function httpGetAsync(theUrl, callback) {
 	}
 	xmlHttp.open("GET", theUrl, true); // true for asynchronous 
 	xmlHttp.send(null);
+}
+
+function setupBackground(result){
+	var backgrounds = JSON.parse(result);
+	var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+	document.body.style.backgroundImage = "url('" + selected.url + "')";
+	document.getElementById("backgroundCaption").innerText = selected.caption;
+	document.getElementById("backgroundAuthor").innerText = "Taken by: " + selected.author;
 }
 
 var weatherCode = 113; //Default to sunny

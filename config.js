@@ -1,6 +1,3 @@
-//The number of images in the scanuproductions.com image gallery, you don't need to change this
-const NUMBER_OF_IMAGES = 24; //Default Value: 24
-
 //Whether the to-do list is enabled or not.
 const TODO_ENABLED = true; //Default Value: true
 

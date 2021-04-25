@@ -9,10 +9,10 @@ An open-source alternative to the Momentum new tab page.
 - I wanted a new-tab page that could use my To-Do list
 
 # Why isn't the to-do list fully open-source?
-If I didn't keep my PHP private, my friends would immediately find a way to break it. The to do list widget can be pointed at a different webpage or disabled completely in config.js if you don't like it.
+If I didn't keep my PHP private, my friends would immediately find a way to break it. The to do list widget can be pointed at a different webpage or disabled completely in config.js if you don't like it. If you do choose to use the To-Do list, please keep in mind that it is in beta and therefore contains its fair share of bugs.
 
 # Can I use my own background images?
-I will probably make that configurable in the future.
+Yes! All you need to do is modify backgrounds.js to include the URLs of the images you want to add. RagTab **cannot** access your computer's filesystem, so please put your images in the extension directory or store them online. Also keep in mind that storing your images online will cause RagTab to display a blank white background when your computer is offline.
 
 # I want Google instead of DuckDuckGo!
 The search engine can be configured by setting SEARCH_ENGINE in config.js. 0 is DuckDuckGo, 1 is Google, 2 is Wikipedia
@@ -29,6 +29,7 @@ As long as you are familiar with JSON, you should be able to add any search engi
 }
 ```
 4) Make sure your engines.json looks something like this:
+(Note that the last item does not have a comma at the end. You may want to use an online JSON validator to double check.)
 ```json 
 [
 	{
@@ -49,5 +50,4 @@ As long as you are familiar with JSON, you should be able to add any search engi
 	}
  ]
 ```
-Note that the last item does not have a comma at the end. You may want to use an online JSON validator.
 5) Finally, you need to set SEARCH_ENGINE in config.js. Computers start counting at 0, not 1, so in my example I set SEARCH_ENGINE to 3 for Craigslist.
