@@ -8,6 +8,13 @@ An open-source alternative to the Momentum new tab page.
 - I was tired of Momentum nagging me to upgrade.
 - I wanted a new-tab page that could use my To-Do list
 
+# How do I install it?
+1) Either download this repository or clone it. Cloning it will allow you to recieve updates by pulling.
+2) On a chromium based browser (Edge, Chrome, Brave, Vivialdi, etc...), navigate to the extensions page. The URL will be something like `edge://extensions/` or `chrome://extensions/`
+3) Enable developer mode. This will be a toggle switch somewhere on the extensions page, in a different place depending on the browser
+4) Click "Load unpacked" and select the folder you cloned or downloaded.
+5) OPTIONAL: Disable the developer mode extensions warning. https://www.ghacks.net/2017/07/04/hide-chromes-disable-developer-mode-extensions-warning/
+
 # Why isn't the to-do list fully open-source?
 If I didn't keep my PHP private, my friends would immediately find a way to break it. The to do list widget can be pointed at a different webpage or disabled completely in config.js if you don't like it. If you do choose to use the To-Do list, please keep in mind that it is in beta and therefore contains its fair share of bugs.
 

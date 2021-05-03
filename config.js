@@ -10,5 +10,11 @@ const WEATHER_ENABLED = true; //Default Value: true
 //What location to provide to wttr.in when getting weather data. If left blank, wttr.in will use your current location. Example Values: "london", "iowa-city", "48.8755546,-87.6244212"
 const WEATHER_LOCATION = ""; //Default Value: ""
 
+//Whether the weather widget will refresh automatically. This has no effect if WEATHER_ENABLED is set to false.
+const AUTO_REFRESH = true; //Default Value: true
+
+//How often (in minutes) the weather widget will refresh. This has no effect if AUTO_REFRESH is set to false.
+const AUTO_REFRESH_INTERVAL = 15;//Default Value: 15
+
 //What search engine to use. Search engines are defined in engines.json. 0 is DuckDuckGo, 1 is Google, 2 is Wikipedia
 const SEARCH_ENGINE = 0; //Default Value: 0

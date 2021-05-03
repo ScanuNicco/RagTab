@@ -20,16 +20,27 @@ function GetClock() {
 	document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + ap + "";
 }
 
+var refresh;
 window.onload = function () {
 	GetClock();
 	setInterval(GetClock, 1000);
 	httpGetAsync(chrome.runtime.getURL('backgrounds.json'), setupBackground);
+	getWeather();
+	document.getElementById("refreshButt").addEventListener("click", getWeather);
+	if(WEATHER_ENABLED && AUTO_REFRESH){
+		refresh = setInterval(getWeather, (AUTO_REFRESH_INTERVAL * 60000));
+	}
+	httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
+}
+
+function getWeather(){
+	document.getElementById("temp").innerHTML = "--";
+	document.getElementById("location").innerHTML = "--";
 	if(WEATHER_ENABLED){
 		httpGetAsync('https://wttr.in/' + WEATHER_LOCATION + '?format=j1', showWeather);
 	} else {
-		document.getElementById("weatherbox").style.display = "none";
+		document.getElementById("weatherCont").style.display = "none";
 	}
-	httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
 }
 
 function httpGetAsync(theUrl, callback) {

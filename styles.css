@@ -11,13 +11,23 @@
 #weatherbox {
 	color: white;
 	font: 'Roboto', sans-serif;
-	position: absolute;
-	top: 5px;
-	right: 5px;
 	border-radius: 5px;
 	background: rgba(0, 0, 0, .3);
 	backdrop-filter: blur(10px);
 	padding: 10px;
+	display: inline-block;
+}
+
+#refreshButt {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 0px;
+}
+
+#weatherCont{
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
 
 #weatherbox h1 {
