@@ -87,7 +87,13 @@ function setupSearch(result){
 	document.getElementById("search").placeholder = "Search with " + engines[SEARCH_ENGINE].name;
 }
 
-document.getElementById("duckButt").addEventListener("click", duck);
+document.getElementById("duckButt").addEventListener("click", duck);// If the "Go" button is clicked, trigger the duck() function to start the search
+document.getElementById("search").addEventListener("keyup", function (event) {
+            // Key code 13 is enter, trigger the search if it is pressed
+            if (event.keyCode == 13) {
+                duck();
+            }
+        });
 function duck(){
 	var term = document.getElementById("search").value;
 	location.href = searchEngineURL + term;
