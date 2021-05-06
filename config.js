@@ -18,3 +18,12 @@ const AUTO_REFRESH_INTERVAL = 15;//Default Value: 15
 
 //What search engine to use. Search engines are defined in engines.json. 0 is DuckDuckGo, 1 is Google, 2 is Wikipedia
 const SEARCH_ENGINE = 0; //Default Value: 0
+
+//Whether the countdown widget is enabled
+const COUNTDOWN_ENABLED = false; //Default Value: false
+
+//The time that the countdown widget is counting down to. Can be any format that the JavaScript Date() object takes.
+const COUNTDOWN_TIME ="Dec 17, 2021 12:00:00"; //Default Value: "Dec 17, 2021 12:00:00" (The release date of the next spider man movie)
+
+//The title that is displayed on the widget.
+const COUNTDOWN_TITLE = "Spider-Man Releases In:"; //Default Value: "Spider-Man Releases In:"

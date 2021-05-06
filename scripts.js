@@ -18,6 +18,23 @@ function GetClock() {
 	if (nmin <= 9) nmin = "0" + nmin;
 
 	document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + ap + "";
+	if(COUNTDOWN_ENABLED){
+		var count = new Date(COUNTDOWN_TIME);
+		var difference = count.getTime() - d.getTime();
+		
+		//The following calcualtions may have been borrowed from w3schools because i'm lazy
+		var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+		var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+		
+		document.getElementById("countTitle").innerText = COUNTDOWN_TITLE;
+		if(difference > 0){
+			document.getElementById("countdown").innerHTML = `${days}<units>d</units> ${hours}<units>h</units> ${minutes}<units>m</units> ${seconds}<units>s</units>`;
+		} else {
+			document.getElementById("countdown").innerHTML = "0 <units>Seconds</units>";
+		}
+	}
 }
 
 var refresh;
@@ -31,6 +48,9 @@ window.onload = function () {
 		refresh = setInterval(getWeather, (AUTO_REFRESH_INTERVAL * 60000));
 	}
 	httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
+	if(!COUNTDOWN_ENABLED){
+		document.getElementById("countdownBox").style.display = "none";
+	}
 }
 
 function getWeather(){
