@@ -41,13 +41,21 @@ var refresh;
 window.onload = function () {
 	GetClock();
 	setInterval(GetClock, 1000);
-	httpGetAsync(chrome.runtime.getURL('backgrounds.json'), setupBackground);
+	if(webVersion){
+		httpGetAsync('backgrounds.json', setupBackground);
+	} else {
+		httpGetAsync(chrome.runtime.getURL('backgrounds.json'), setupBackground);
+	}
 	getWeather();
 	document.getElementById("refreshButt").addEventListener("click", getWeather);
 	if(WEATHER_ENABLED && AUTO_REFRESH){
 		refresh = setInterval(getWeather, (AUTO_REFRESH_INTERVAL * 60000));
 	}
-	httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
+	if(webVersion){
+		httpGetAsync('engines.json', setupSearch);
+	} else {
+		httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
+	}
 	if(!COUNTDOWN_ENABLED){
 		document.getElementById("countdownBox").style.display = "none";
 	}

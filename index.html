@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>New Tab</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<input id="search" placeholder="Search with DuckDuckGo"><button id="duckButt">Go!</button>
+	<div id="clockbox"></div>
+	<div id="weatherCont">
+		<button id='refreshButt'>Refresh</button>
+		<div id="weatherbox">
+			<h2 id="location">--</h2>
+			<div style="display: flex; margin: auto">
+				<img id="icon">
+				<div id="weatherInfo"></div>
+				<h1 id="temp">--</h1>
+			</div>
+		</div>
+		<div id="countdownBox">
+			<h2 id="countTitle"></h2>
+			<h1 id="countdown"></h1>
+			<br clear="all">
+		</div>
+	</div>
+	<div id="backgroundInfo">
+		<h2 id="backgroundCaption"></h2>
+		<h3 id="backgroundAuthor"></h3>
+	</div>
+	<button id="todoButt">Todo</button>
+	<script>var webVersion = true;</script>
+	<script src="config.js"></script>
+	<script src="scripts.js"></script>
+</body>
+
+</html>
