@@ -98,7 +98,11 @@ function showWeather(result) {
 	weatherCode = weather.current_condition[0].weatherCode;
 	document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
 	document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
-	httpGetAsync(chrome.runtime.getURL('weather.json'), showIcon);
+	if(webVersion){
+		httpGetAsync('weather.json', showIcon);
+	}else{
+		httpGetAsync(chrome.runtime.getURL('weather.json'), showIcon);
+	}
 }
 
 function showIcon(result){
