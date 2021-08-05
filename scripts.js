@@ -41,6 +41,9 @@ var refresh;
 window.onload = function () {
 	GetClock();
 	setInterval(GetClock, 1000);
+	if(typeof webVersion === "undefined"){
+		webVersion = false;
+	}
 	if(webVersion){
 		httpGetAsync('backgrounds.json', setupBackground);
 	} else {
