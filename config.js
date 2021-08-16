@@ -27,3 +27,9 @@ const COUNTDOWN_TIME = "Dec 17, 2021 12:00:00"; //Default Value: "Dec 17, 2021 1
 
 //The title that is displayed on the widget.
 const COUNTDOWN_TITLE = "Spider-Man Releases In:"; //Default Value: "Spider-Man Releases In:"
+<<<<<<< Updated upstream
+=======
+
+//Whether the California Wildfires widget will display. The widget still won't display if you aren't in California or if Califrornia is not on fire.
+const CALIFORNIA_WILDFIRES = true; //Default Value: true
+>>>>>>> Stashed changes

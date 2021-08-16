@@ -8,7 +8,7 @@
 	text-align: center;
 }
 
-#weatherbox, #countdownBox {
+#weatherbox, #countdownBox, #fireBox {
 	color: white;
 	font: 'Roboto', sans-serif;
 	border-radius: 5px;
@@ -27,8 +27,10 @@ units {
 	margin-bottom: 5px;
 }
 
-#countdownBox {
+#countdownBox, #fireBox {
 	text-align: left;
+	margin-bottom: 5px;
+	max-width: 20vw;
 }
 
 #refreshButt {
@@ -55,7 +57,7 @@ units {
 	margin: 5px;
 }
 
-#icon {
+#icon, #fireIcon {
 	filter: invert(1);
 	display: inline-block;
 	height: 70px;
