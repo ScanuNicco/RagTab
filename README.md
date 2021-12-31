@@ -15,8 +15,7 @@ An open-source alternative to the Momentum new tab page.
 3) Enable developer mode. This will be a toggle switch somewhere on the extensions page, in a different place depending on the browser
 4) Click "Load unpacked" and select the folder you cloned or downloaded.
 5) OPTIONAL: Disable the developer mode extensions warning. https://www.ghacks.net/2017/07/04/hide-chromes-disable-developer-mode-extensions-warning/
-## Or Use the Online Version
-If you use non-chromium based browser (Legacy Edge, IE, Safari, Firefox), you can install RagTab by setting your new tab page to https://scanunicco.github.io/RagTab/. If you use the online version of RagTab, you will not be able to configure RagTab using config.js.
+
 # Why isn't the to-do list fully open-source?
 If I didn't keep my PHP private, my friends would immediately find a way to break it. The to do list widget can be pointed at a different webpage or disabled completely in config.js if you don't like it. If you do choose to use the To-Do list, please keep in mind that it is in beta and therefore contains its fair share of bugs.
 
