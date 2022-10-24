@@ -1,5 +1,5 @@
 # RagTab
-An open-source alternative to the Momentum new tab page.
+A thoughtfully designed and highly configurable Open Source new tab page.
 ![Screenshot of RagTab](Screenshot.png)
 
 # Why does this exist?
