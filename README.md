@@ -3,29 +3,24 @@ An open-source alternative to the Momentum new tab page.
 ![Screenshot of RagTab](Screenshot.png)
 
 # Why does this exist?
-- I was bored
-- Edge randomly removed Momentum from my computer.
-- I was tired of Momentum nagging me to upgrade.
-- I wanted a new-tab page that could use my To-Do list
+There are several decent new tab extensions already available, but many lack customization and prompt you for paid subscriptions from time to time. RagTab is an open-source alternative to those extensions.
 
 # How do I install it?
-## Install the Extension
-1) Either download this repository or clone it. Cloning it will allow you to recieve updates by pulling.
-2) On a chromium based browser (Edge, Chrome, Brave, Vivialdi, etc...), navigate to the extensions page. The URL will be something like `edge://extensions/` or `chrome://extensions/`
-3) Enable developer mode. This will be a toggle switch somewhere on the extensions page, in a different place depending on the browser
-4) Click "Load unpacked" and select the folder you cloned or downloaded.
-5) OPTIONAL: Disable the developer mode extensions warning. https://www.ghacks.net/2017/07/04/hide-chromes-disable-developer-mode-extensions-warning/
+## Install from source code
+1) Clone this repository
+2) In firefox, go to the add-ons page. Then click the gear and go to "Debug Add-Ons"
+3) Click "Load temporary Add-On" and select manifest.json
 
-# Why isn't the to-do list fully open-source?
-If I didn't keep my PHP private, my friends would immediately find a way to break it. The to do list widget can be pointed at a different webpage or disabled completely in config.js if you don't like it. If you do choose to use the To-Do list, please keep in mind that it is in beta and therefore contains its fair share of bugs.
+## Permenant installation
+I am currently preparing to upload RagTab to the Firefox add-ons store. I currently have no plans to add RagTab to the Chrome Web Store because it costs money to do so.
 
-# Can I use my own background images?
-Yes! All you need to do is modify backgrounds.js to include the URLs of the images you want to add. RagTab **cannot** access your computer's filesystem, so please put your images in the extension directory or store them online. Also keep in mind that storing your images online will cause RagTab to display a blank white background when your computer is offline.
+# What's up with the To-Do list.
+The to-do list should be considered in alpha, which is why it is disabled by default. While the to-do list itself is relatively stable, my site-wide account system is in need of stability upgrades and the login page needs to be optomized for small windows.
 
-# I want Google instead of DuckDuckGo!
-The search engine can be configured by setting SEARCH_ENGINE in config.js. 0 is DuckDuckGo, 1 is Google, 2 is Wikipedia
+# Adding background images
+After cloning this repo, add your images to the Backgrounds folder. Then modify backgrounds.json to include the URLs of the images you want to add, making sure to add a location and crediting yourself. After that submit a PR and i'll decide whether your images are a good fit. Images should be of nature and not have people in them to the extent possible.
 
-# How can I set a different search engine besides DuckDuckGo, Google, and Wikipedia
+# Adding search engines.
 As long as you are familiar with JSON, you should be able to add any search engine. For these instructions, I will use craigslist.org as an example
 1) Search something on the website you want to add.
 2) Get everything in the URL that comes before the search term. In this case my URL was `https://sfbay.craigslist.org/d/for-sale/search/sss?query=vr%20headset&sort=rel`, so I got `https://sfbay.craigslist.org/d/for-sale/search/sss?query=`.
@@ -58,4 +53,4 @@ As long as you are familiar with JSON, you should be able to add any search engi
 	}
  ]
 ```
-5) Finally, you need to set SEARCH_ENGINE in config.js. Computers start counting at 0, not 1, so in my example I set SEARCH_ENGINE to 3 for Craigslist.
+5) Finally, you'll need to set SEARCH_ENGINE in config.js. Computers start counting at 0, not 1, so in my example I set SEARCH_ENGINE to 3 for Craigslist.

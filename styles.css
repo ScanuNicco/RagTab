@@ -1,6 +1,6 @@
 #clockbox {
     font-family: 'Roboto', sans-serif;
-    font-size: 10vw;
+    font-size: 7em;
     color: white;
     padding: 50px;
 	margin-top: 10vh;
@@ -30,7 +30,15 @@ units {
 #countdownBox, #fireBox {
 	text-align: left;
 	margin-bottom: 5px;
-	max-width: 20vw;
+	float: right;
+}
+
+#fireBox {
+	width: calc(100% - 20px);
+}
+
+#countdownBox {
+	width: max-content;
 }
 
 #refreshButt {
@@ -44,11 +52,11 @@ units {
 	top: 5px;
 	right: 5px;
 	text-align: right;
+	width: 30vw;
 }
 
 #weatherCont h1 {
 	display: inline-block;
-	font-size: 40px;
 	margin: 10px;
 	float: right;
 }
@@ -66,6 +74,9 @@ units {
 body {
 	background-size: cover;
 	font-family: sans-serif;
+	overflow: hidden;
+	height: 100vh;
+	background-position: center;
 }
 
 a {
@@ -77,7 +88,7 @@ a:visited {
 	color: white;
 }
 
-input, button {
+input, button, select {
 	color: white;
 	border-radius: 5px;
 	background: rgba(0, 0, 0, .3);
@@ -107,7 +118,7 @@ button:hover {
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
-	width: 50vw;
+	width: calc(50vw - 70px);
 	height: 50vh;
 	border: none;
 	border-radius: 5px;
@@ -139,4 +150,111 @@ button:hover {
 	color: white;
 	text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);	
 	margin: 4px;
+}
+
+.headingBanner {
+	margin: 0px;
+	padding: 5px;
+	text-align: center;
+	border-radius: 5px;
+	background: #fff3;
+	font-size: 16pt;
+}
+
+h2 {
+	font-size: 20pt;
+}
+
+.tdBubble {
+	text-align: left
+}
+
+.tableIcon {
+	width: 24px;
+}
+
+#settingsB {
+	position: absolute;
+	bottom: 5px;
+	width: 100px;
+	left: calc(50vw - 50px);
+}
+
+#settings {
+	width: 100vw;
+	height: 100vh;
+	background: white;
+	z-index: 2;
+	position: absolute;
+	top: 100vh;
+	left: 0px;
+	opacity: 0;
+	transition-duration: .5s;
+}
+
+.settingBubble {
+	margin: 10px auto 10px auto;
+	width: 50vw;
+	text-align: center;
+	background: #eee;
+	padding: 5px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, .2);
+}
+
+.settingBubble h2, .settingBubble h3 {
+	margin-bottom: 5px;S
+}
+
+.settingBubble table h3, .settingBubble table .settingDesc {
+	text-align: left;
+}
+
+.settingDesc {
+	margin: 5px 0px 10px 0px;
+}
+
+.settingDesc a {
+	color: #43c029;
+}
+
+.settingsCol {
+	width: 220px;
+}
+
+.settingBubble input, .settingBubble select {
+	border: none;
+	background: white;
+	box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .3);
+	color: black;
+	width: 180px;
+}
+
+.settingBubble input[type="checkbox"] {
+	appearance: none;
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	box-shadow: inset 0px 0px 3px rgba(0, 0, 0, .3);
+	background: white;
+}
+
+
+.settingBubble input[type="checkbox"]:checked {
+	box-shadow: 0px 0px 3px #43c029;
+	background: #43c029;
+}
+
+.scrollCont {
+	height: 100%;
+	overflow-y: auto;
+}
+
+#closeSettings {
+	background: white;
+	color: black;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }

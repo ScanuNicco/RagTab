@@ -20,18 +20,20 @@
 			</div>
 		</div>
 		<div id="countdownBox">
-			<h2 id="countTitle"></h2>
+			<h2 id="countTitle" class="headingBanner"></h2>
 			<h1 id="countdown"></h1>
 			<br clear="all">
 		</div>
 		<div id="fireBox">
-			<a href="https://www.fire.ca.gov/incidents/"><h2>California Wildfires:</h2></a>
+			<a href="https://www.fire.ca.gov/incidents/"><h2 class="headingBanner">California Wildfires</h2></a>
 			<div style="display: flex">
 				<img id="fireIcon" alt="fire icon" src="Icons/fire.png" style="margin: 15px;">
 				<div style="text-align: center;">
-					<a id="fireURL"><h2 id="fireName" style="font-size: 3em; margin: 5px;"></h2></a>
-					<h3 id="fireLocation"></h3>
-					<p id="fireContainment"></p>
+					<a id="fireURL"><h2 id="fireName" style="margin: 5px;"></h2></a>
+					<table>
+						<tr><td><img class="tableIcon" src='Icons/location.svg'></td><td id="fireLocation" class="tdBubble"></td></tr>
+						<tr><td><img class="tableIcon" src='Icons/containment.svg'></td><td id="fireContainment" class="tdBubble"></td></tr>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -40,9 +42,68 @@
 		<h2 id="backgroundCaption"></h2>
 		<h3 id="backgroundAuthor"></h3>
 	</div>
+	<button id="settingsB">Settings</button>
+	<div id="settings">
+		<button id="closeSettings">Save and Close</button>
+		<div class="scrollCont">
+			<div class="settingBubble">
+				<h2>Todo List</h2>
+				<p class="settingDesc">Integrate the To-Do list webapp of your choice.</p>
+				<table>
+					<tr><td class="settingsCol"><input type="checkbox" id="enableTodo"></td><td class="descCol"><h3>Enable</h3><p class="settingDesc">Whether to show the "To-Do" button.</p></td></tr>
+					<tr><td class="settingsCol"><input id="todoURL"></td><td class="descCol"><h3>URL</h3><p class="settingDesc">The url of the embedded to-do list.</p></td></tr>
+				</table>
+			</div>
+			<div class="settingBubble">
+				<h2>Weather</h2>
+				<p class="settingDesc">Configure or disable the Weather widget. Weather data from wttr.in.</p>
+				<table>
+					<tr><td class="settingsCol"><input type="checkbox" id="enableWeather"></td><td class="descCol"><h3>Enable</h3><p class="settingDesc">Whether to show the weather widget.</p></td></tr>
+					<tr><td class="settingsCol"><input id="weatherLoc"></td><td class="descCol"><h3>Custom Location</h3><p class="settingDesc">If specified, the weather widget will use this location instead of your current location.</p></td></tr>
+					<tr><td class="settingsCol"><input type="checkbox" id="enableRefresh"></td><td class="descCol"><h3>Auto Refresh</h3><p class="settingDesc">Whether to automatically refresh the weather widget.</p></td></tr>
+					<tr><td class="settingsCol"><input type="number" min="1" max="60" id="refreshInt"></td><td class="descCol"><h3>Auto Refresh Interval</h3><p class="settingDesc">How often (in minutes) to refresh the weather widget.</p></td></tr>
+				</table>
+			</div>
+			<div class="settingBubble">
+				<h2>Wildfires</h2>
+				<p class="settingDesc">RagTab can display information about the nearest Califoria wildfire.</p>
+				<table>
+					<tr><td class="settingsCol"><input type="checkbox" id="enableFires"></td><td class="descCol"><h3>Enable</h3><p class="settingDesc">Whether to show the "California Wildfires" widget. This setting has no effect if the weather widget location is outside of California.</p></td></tr>
+				</table>
+			</div>
+			<div class="settingBubble">
+				<h2>Countdown</h2>
+				<p class="settingDesc">Display a countdown timer to something you're looking forward to.</p>
+				<table>
+					<tr><td class="settingsCol"><input type="checkbox" id="enableCount"></td><td class="descCol"><h3>Enable</h3><p class="settingDesc">Whether to show the countdown widget.</p></td></tr>
+					<tr><td class="settingsCol"><input id="countTitleInput"></td><td class="descCol"><h3>Title</h3><p class="settingDesc">What are you counting down to?</p></td></tr>
+					<tr><td class="settingsCol"><input id="countTime" type="datetime-local"></td><td class="descCol"><h3>Time</h3><p class="settingDesc">Enter a date and time</p></td></tr>
+				</table>
+			</div>
+			<div class="settingBubble">
+				<h2>Search Engine</h2>
+				<p class="settingDesc">Configure search engines.</p>
+				<table>
+					<tr><td class="settingsCol"><select id="searchSelect"></select></td><td class="descCol"><h3>Select Engine</h3><p class="settingDesc">Which engine to use in the search bar.</p></td></tr>
+				</table>
+			</div>
+			<div class="settingBubble">
+				<h2>About RagTab</h2>
+				<p class="settingDesc">Version <v id="version"></v></p>
+				<table>
+					<tr>
+						<td class="settingsCol"><img src="/ragtab.svg" style="width: 128px;"></td>
+						<td class="descCol">
+							<h3>Credits</h3><p class="settingDesc">RagTab is developed by <a href="https://scanuproductions.com">ScanuRag</a>. Weather icons by <a href="https://mpetroff.net/2012/09/kindle-weather-display/">Matthew Petroff</a>.</p>
+							<h3>Open Source</h3><p class="settingDesc">RagTab is Open Source software. <a href="https://github.com/ScanuNicco/RagTab">Source code</a>.</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 	<button id="todoButt">Todo</button>
-	<script>var webVersion = false;</script>
-	<script src="config.js"></script>
+	<script src="defaults.js"></script>
 	<script src="scripts.js"></script>
 </body>
 

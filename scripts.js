@@ -1,6 +1,48 @@
 var background = chrome.extension.getBackgroundPage();
+const BACKGROUNDS_CONFIG_URL = chrome.runtime.getURL('backgrounds.json');
+const WEATHER_CONFIG_URL = chrome.runtime.getURL('weather.json');
+const ENGINES_CONFIG_URL = chrome.runtime.getURL('engines.json');
+var refresh;
+var settings = {todo: {enabled: TODO_ENABLED, url: TODO_URL}, weather: {enabled: WEATHER_ENABLED, location: WEATHER_LOCATION, autoRefresh: AUTO_REFRESH, refreshInterval: AUTO_REFRESH_INTERVAL}, searchEngine: SEARCH_ENGINE, countdown: {enabled: COUNTDOWN_ENABLED, timeStamp: COUNTDOWN_TIME, title: COUNTDOWN_TITLE}, wildfires: CALIFORNIA_WILDFIRES};
+window.onload = async function() {
+        await loadSettings();
+        setup();
+};
 
-function GetClock() {
+async function setup() {
+        runClock();
+        setInterval(runClock, 1000);
+        if (typeof webVersion === "undefined") {
+                webVersion = false;
+        }
+        setupBackground();
+        setupSearch();
+        populateSettings();
+        document.getElementById("refreshButt").addEventListener("click", getWeather);
+        if (settings.weather.enabled) {
+                getWeather();
+                if(settings.weather.autoRefresh){
+                        refresh = setInterval(getWeather, (settings.weather.refreshInterval * 60000));
+                }
+        }
+        document.getElementById("todoButt").addEventListener("click", function() {
+                var todo = document.createElement("iframe");
+                todo.id = "todo";
+                todo.src = settings.todo.url;
+                document.body.appendChild(todo);
+        });
+
+        if (!settings.todo.enabled) {
+                document.getElementById("todoButt").style.display = "none";
+        } else {
+                get("todoButt").style.display = "block";
+        }
+        if (!settings.countdown.enabled) {
+                document.getElementById("countdownBox").style.display = "none";
+        }
+}
+
+function runClock() {
         var d = new Date();
         var nhour = d.getHours(),
                 nmin = d.getMinutes(),
@@ -20,8 +62,8 @@ function GetClock() {
         if (nmin <= 9) nmin = "0" + nmin;
 
         document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + ap + "";
-        if (COUNTDOWN_ENABLED) {
-                var count = new Date(COUNTDOWN_TIME);
+        if (settings.countdown.enabled) {
+                var count = new Date(settings.countdown.timeStamp);
                 var difference = count.getTime() - d.getTime();
 
                 //The following calcualtions may have been borrowed from w3schools because i'm lazy
@@ -30,7 +72,7 @@ function GetClock() {
                 var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-                document.getElementById("countTitle").innerText = COUNTDOWN_TITLE;
+                document.getElementById("countTitle").innerText = settings.countdown.title;
                 if (difference > 0) {
                         document.getElementById("countdown").innerHTML = `${days}<units>d</units> ${hours}<units>h</units> ${minutes}<units>m</units> ${seconds}<units>s</units>`;
                 } else {
@@ -39,100 +81,59 @@ function GetClock() {
         }
 }
 
-var refresh;
-window.onload = function() {
-        GetClock();
-        setInterval(GetClock, 1000);
-        if (typeof webVersion === "undefined") {
-                webVersion = false;
-        }
-        if (webVersion) {
-                httpGetAsync('backgrounds.json', setupBackground);
-        } else {
-                httpGetAsync(chrome.runtime.getURL('backgrounds.json'), setupBackground);
-        }
-        getWeather();
-        document.getElementById("refreshButt").addEventListener("click", getWeather);
-        if (WEATHER_ENABLED && AUTO_REFRESH) {
-                refresh = setInterval(getWeather, (AUTO_REFRESH_INTERVAL * 60000));
-        }
-        if (webVersion) {
-                httpGetAsync('engines.json', setupSearch);
-        } else {
-                httpGetAsync(chrome.runtime.getURL('engines.json'), setupSearch);
-        }
-        if (!COUNTDOWN_ENABLED) {
-                document.getElementById("countdownBox").style.display = "none";
-        }
+async function loadJSON(url){
+        const response = await fetch(url);
+        return await response.json();
 }
 
-function getWeather() {
+var weatherCode = 113; //Default to sunny
+async function getWeather() {
         document.getElementById("temp").innerHTML = "--";
         document.getElementById("location").innerHTML = "--";
-        if (WEATHER_ENABLED) {
-                httpGetAsync('https://wttr.in/' + WEATHER_LOCATION + '?format=j1', showWeather);
+        if (settings.weather.enabled) {
+                var weather = await loadJSON('https://wttr.in/' + settings.weather.location + '?format=j1');
+                weatherCode = weather.current_condition[0].weatherCode;
+                document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
+                document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
+                var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
+                var icons = iconsFile.condition;
+                for (i = 0; i < icons.length; i++) {
+                        if (icons[i].code == weatherCode) {
+                                document.getElementById("icon").src = "Icons/" + icons[i].icon;
+                                document.getElementById("weatherInfo").innerText = icons[i].description;
+                        }
+                }
+                if (settings.wildfires && weather.nearest_area[0].region[0].value == "California") {
+                        //If the user is in California and CALIFORNIA_WILDFIRES is set to true
+                        showFires( weather.nearest_area[0].longitude, weather.nearest_area[0].latitude);
+                } else {
+                        document.getElementById("fireBox").style.display = "none";
+                }
         } else {
                 document.getElementById("weatherCont").style.display = "none";
         }
 }
 
-function httpGetAsync(theUrl, callback) {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                        callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-        xmlHttp.send(null);
-}
-
-function setupBackground(result) {
-        var backgrounds = JSON.parse(result);
+async function setupBackground() {
+        var backgrounds = await loadJSON(BACKGROUNDS_CONFIG_URL);
         var selected = backgrounds[Math.floor(Math.random() * backgrounds.length)];
         document.body.style.backgroundImage = "url('" + selected.url + "')";
         document.getElementById("backgroundCaption").innerText = selected.caption;
         document.getElementById("backgroundAuthor").innerText = "Taken by: " + selected.author;
 }
 
-var weatherCode = 113; //Default to sunny
-var userLongitude;
-var userLatitude;
-
-function showWeather(result) {
-        var weather = JSON.parse(result);
-        weatherCode = weather.current_condition[0].weatherCode;
-        document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
-        document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
-        if (webVersion) {
-                httpGetAsync('weather.json', showIcon);
-        } else {
-                httpGetAsync(chrome.runtime.getURL('weather.json'), showIcon);
-        }
-        if (CALIFORNIA_WILDFIRES && weather.nearest_area[0].region[0].value == "California" && !webVersion) {
-                //If the user is in California and CALIFORNIA_WILDFIRES is set to true
-		console.log(webVersion);
-                userLongitude = weather.nearest_area[0].longitude;
-                userLatitude = weather.nearest_area[0].latitude;
-                httpGetAsync('https://www.fire.ca.gov/umbraco/api/IncidentApi/List?inactive=false', showFires);
-        }
-}
-
-function showIcon(result) {
-        var icons = JSON.parse(result).condition;
-        for (i = 0; i < icons.length; i++) {
-                if (icons[i].code == weatherCode) {
-                        document.getElementById("icon").src = "Icons/" + icons[i].icon;
-                        document.getElementById("weatherInfo").innerText = icons[i].description;
-                }
-        }
-}
-
 var searchEngineURL = "https://duckduckgo.com?q=";
-
-function setupSearch(result) {
-        var engines = JSON.parse(result);
-        searchEngineURL = engines[SEARCH_ENGINE].url;
-        document.getElementById("search").placeholder = "Search with " + engines[SEARCH_ENGINE].name;
+var engines;
+async function setupSearch() {
+        engines = await loadJSON(ENGINES_CONFIG_URL);
+        searchEngineURL = engines[settings.searchEngine].url;
+        document.getElementById("search").placeholder = "Search with " + engines[settings.searchEngine].name;
+        for(var i = 0; i < engines.length; i++){
+                var opt = document.createElement("OPTION");
+                opt.value = i;
+                opt.innerText = engines[i].name;
+                get("searchSelect").appendChild(opt);
+        }
 }
 
 document.getElementById("duckButt").addEventListener("click", duck); // If the "Go" button is clicked, trigger the duck() function to start the search
@@ -148,23 +149,8 @@ function duck() {
         location.href = searchEngineURL + term;
 }
 
-document.getElementById("todoButt").addEventListener("click", function() {
-        var todo = document.createElement("iframe");
-        todo.id = "todo";
-        todo.src = TODO_URL;
-        document.body.appendChild(todo);
-});
-
-if (!TODO_ENABLED) {
-        document.getElementById("todoButt").style.display = "none";
-}
-
-if (!CALIFORNIA_WILDFIRES) {
-        document.getElementById("fireBox").style.display = "none";
-}
-
-function showFires(result) {
-        var fires = JSON.parse(result);
+async function showFires(userLongitude, userLatitude) {
+        var fires = await loadJSON('https://www.fire.ca.gov/umbraco/api/IncidentApi/List?inactive=false', showFires);
         if (fires.length > 1) {
                 var closestFire = 0;
                 var closestFireDist = 1000.0;
@@ -185,9 +171,9 @@ function showFires(result) {
                 } else {
                         document.getElementById("fireLocation").innerText = fires[closestFire].Location + " in " + fires[closestFire].County + " county.";
                 }
-                if (fires[closestFire].ControlStatement != null) {
+                if (fires[closestFire].ControlStatement != null && fires[closestFire].ControlStatement != "") {
                         document.getElementById("fireContainment").innerText = fires[closestFire].ControlStatement;
-                } else if (fires[closestFire].PercentContained != null) {
+                } else if (fires[closestFire].PercentContained != null && fires[closestFire].PercentContained != "") {
                         document.getElementById("fireContainment").innerText = fires[closestFire].PercentContained + "% Contained.";
                 } else {
                         document.getElementById("fireContainment").innerText = "No containment information";
@@ -195,5 +181,68 @@ function showFires(result) {
         } else {
                 //Yay! There are no wildfires in California!
                 document.getElementById("fireBox").style.display = "none";
+        }
+}
+
+document.getElementById("settingsB").onclick = openSettings;
+function openSettings() {
+        document.getElementById("settings").style.top = "0px";
+        document.getElementById("settings").style.opacity = "1";
+}
+
+document.getElementById("closeSettings").onclick = closeSettings;
+function closeSettings() {
+        saveSettings();
+        document.getElementById("settings").style.top = "100vh";
+        document.getElementById("settings").style.opacity = "0";
+}
+
+function populateSettings() {
+        get("version").innerText = browser.runtime.getManifest().version;
+        get("enableTodo").checked = settings.todo.enabled;
+        get("todoURL").value = settings.todo.url;
+        get("enableWeather").checked = settings.weather.enabled;
+        get("weatherLoc").value = settings.weather.location;
+        get("enableRefresh").checked = settings.weather.autoRefresh;
+        get("refreshInt").value = settings.weather.refreshInterval;
+        get("enableFires").checked = settings.wildfires;
+        get("enableCount").checked = settings.countdown.enabled;
+        get("countTitleInput").value = settings.countdown.title;
+        var when = new Date(settings.countdown.timeStamp);
+        when.setMinutes(when.getMinutes() - when.getTimezoneOffset());
+        get("countTime").value  = when.toISOString().slice(0,16);
+        get("searchSelect").value = settings.searchEngine;
+}
+
+function get(name){ //Alias for document.getElementById so I don't have to type it so much
+        return document.getElementById(name);
+}
+
+function saveSettings() {
+        settings.todo.enabled = get("enableTodo").checked;
+        settings.todo.url = get("todoURL").value;
+        settings.weather.enabled = get("enableWeather").checked;
+        settings.weather.location = get("weatherLoc").value;
+        settings.weather.autoRefresh = get("enableRefresh").checked;
+        settings.weather.refreshInterval = parseInt(get("refreshInt").value);
+        settings.wildfires = get("enableFires").checked;
+        settings.countdown.enabled = get("enableCount").checked;
+        settings.countdown.title = get("countTitleInput").value;
+        settings.countdown.timeStamp = new Date(get("countTime").value).getTime();
+        settings.searchEngine = parseInt(get("searchSelect").value);
+        chrome.storage.sync.set({"settings": settings}, function() {
+                console.log("Saved Settings!");
+        });
+        setup();
+}
+
+async function loadSettings() {
+        var savedSettings = await new Promise((resolve, reject) => {
+                chrome.storage.sync.get("settings", function(result) {
+                        resolve(result.settings);
+                });
+        });
+        if(savedSettings != null && savedSettings != undefined){
+                settings = savedSettings;
         }
 }

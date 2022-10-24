@@ -10,5 +10,13 @@
 	{
 		"name": "Wikipedia",
 		"url": "https://en.wikipedia.org/w/index.php?search="
+	},
+	{
+		"name": "Bing",
+		"url": "https://www.bing.com/search?q="
+	},
+	{
+		"name": "Yahoo",
+		"url": "https://search.yahoo.com/search?p="
 	}
 ]
