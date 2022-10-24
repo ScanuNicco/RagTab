@@ -13,7 +13,8 @@ const BACKGROUNDS_CONFIG_URL = chrome.runtime.getURL('backgrounds.json');
 const WEATHER_CONFIG_URL = chrome.runtime.getURL('weather.json');
 const ENGINES_CONFIG_URL = chrome.runtime.getURL('engines.json');
 var refresh;
-var settings = {todo: {enabled: TODO_ENABLED, url: TODO_URL}, weather: {enabled: WEATHER_ENABLED, location: WEATHER_LOCATION, autoRefresh: AUTO_REFRESH, refreshInterval: AUTO_REFRESH_INTERVAL}, searchEngine: SEARCH_ENGINE, countdown: {enabled: COUNTDOWN_ENABLED, timeStamp: COUNTDOWN_TIME, title: COUNTDOWN_TITLE}, wildfires: CALIFORNIA_WILDFIRES};
+var settings;
+const DEFAULT_SETTINGS = {todo: {enabled: TODO_ENABLED, url: TODO_URL}, weather: {enabled: WEATHER_ENABLED, location: WEATHER_LOCATION, autoRefresh: AUTO_REFRESH, refreshInterval: AUTO_REFRESH_INTERVAL}, searchEngine: SEARCH_ENGINE, countdown: {enabled: COUNTDOWN_ENABLED, timeStamp: COUNTDOWN_TIME, title: COUNTDOWN_TITLE}, wildfires: CALIFORNIA_WILDFIRES, clock: {militaryTime: MILITARY_TIME, seconds: CLOCK_SECONDS}};
 window.onload = async function() {
         await loadSettings();
         setup();
@@ -30,10 +31,16 @@ async function setup() {
         populateSettings();
         document.getElementById("refreshButt").addEventListener("click", getWeather);
         if (settings.weather.enabled) {
+                get("weatherbox").style.display = "inline-block";
+                get("refreshButt").style.display = "inline-block";
                 getWeather();
                 if(settings.weather.autoRefresh){
                         refresh = setInterval(getWeather, (settings.weather.refreshInterval * 60000));
                 }
+        } else {
+                get("weatherbox").style.display = "none";
+                get("refreshButt").style.display = "none";
+                get("fireBox").style.display = "none";
         }
         document.getElementById("todoButt").addEventListener("click", function() {
                 var todo = document.createElement("iframe");
@@ -48,16 +55,21 @@ async function setup() {
                 get("todoButt").style.display = "block";
         }
         if (!settings.countdown.enabled) {
-                document.getElementById("countdownBox").style.display = "none";
+                get("countdownBox").style.display = "none";
+        } else {
+                get("countdownBox").style.display = "block";
         }
 }
 
 function runClock() {
         var d = new Date();
-        var nhour = d.getHours(),
-                nmin = d.getMinutes(),
-                ap;
-        if (nhour == 0) {
+        var nhour = d.getHours();
+        var nmin = d.getMinutes();
+        var seconds = d.getSeconds();
+        var ap;
+        if(settings.clock.militaryTime) {
+                ap = "";
+        } else if (nhour == 0) {
                 ap = " AM";
                 nhour = 12;
         } else if (nhour < 12) {
@@ -70,13 +82,19 @@ function runClock() {
         }
 
         if (nmin <= 9) nmin = "0" + nmin;
+        if(!settings.clock.seconds){
+                seconds = "";
+        } else if (seconds <= 9) {
+                seconds = ":0" + seconds;
+        } else {
+                seconds = ":" + seconds;
+        }
 
-        document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + ap + "";
+        document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + seconds + ap + "";
         if (settings.countdown.enabled) {
                 var count = new Date(settings.countdown.timeStamp);
                 var difference = count.getTime() - d.getTime();
 
-                //The following calcualtions may have been borrowed from w3schools because i'm lazy
                 var days = Math.floor(difference / (1000 * 60 * 60 * 24));
                 var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
@@ -100,27 +118,23 @@ var weatherCode = 113; //Default to sunny
 async function getWeather() {
         document.getElementById("temp").innerHTML = "--";
         document.getElementById("location").innerHTML = "--";
-        if (settings.weather.enabled) {
-                var weather = await loadJSON('https://wttr.in/' + settings.weather.location + '?format=j1');
-                weatherCode = weather.current_condition[0].weatherCode;
-                document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
-                document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
-                var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
-                var icons = iconsFile.condition;
-                for (i = 0; i < icons.length; i++) {
-                        if (icons[i].code == weatherCode) {
-                                document.getElementById("icon").src = "Icons/" + icons[i].icon;
-                                document.getElementById("weatherInfo").innerText = icons[i].description;
-                        }
+        var weather = await loadJSON('https://wttr.in/' + settings.weather.location + '?format=j1');
+        weatherCode = weather.current_condition[0].weatherCode;
+        document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
+        document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
+        var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
+        var icons = iconsFile.condition;
+        for (i = 0; i < icons.length; i++) {
+                if (icons[i].code == weatherCode) {
+                        document.getElementById("icon").src = "Icons/" + icons[i].icon;
+                        document.getElementById("weatherInfo").innerText = icons[i].description;
                 }
-                if (settings.wildfires && weather.nearest_area[0].region[0].value == "California") {
-                        //If the user is in California and CALIFORNIA_WILDFIRES is set to true
-                        showFires( weather.nearest_area[0].longitude, weather.nearest_area[0].latitude);
-                } else {
-                        document.getElementById("fireBox").style.display = "none";
-                }
+        }
+        if (settings.wildfires && weather.nearest_area[0].region[0].value == "California") {
+                //If the user is in California and CALIFORNIA_WILDFIRES is set to true
+                showFires( weather.nearest_area[0].longitude, weather.nearest_area[0].latitude);
         } else {
-                document.getElementById("weatherCont").style.display = "none";
+                document.getElementById("fireBox").style.display = "none";
         }
 }
 
@@ -136,14 +150,14 @@ var searchEngineURL = "https://duckduckgo.com?q=";
 var engines;
 async function setupSearch() {
         engines = await loadJSON(ENGINES_CONFIG_URL);
-        searchEngineURL = engines[settings.searchEngine].url;
-        document.getElementById("search").placeholder = "Search with " + engines[settings.searchEngine].name;
         for(var i = 0; i < engines.length; i++){
                 var opt = document.createElement("OPTION");
                 opt.value = i;
                 opt.innerText = engines[i].name;
                 get("searchSelect").appendChild(opt);
         }
+        searchEngineURL = engines[settings.searchEngine].url;
+        document.getElementById("search").placeholder = "Search with " + engines[settings.searchEngine].name;
 }
 
 document.getElementById("duckButt").addEventListener("click", duck); // If the "Go" button is clicked, trigger the duck() function to start the search
@@ -160,6 +174,7 @@ function duck() {
 }
 
 async function showFires(userLongitude, userLatitude) {
+        get("fireBox").style.display = "block";
         var fires = await loadJSON('https://www.fire.ca.gov/umbraco/api/IncidentApi/List?inactive=false', showFires);
         if (fires.length > 1) {
                 var closestFire = 0;
@@ -201,6 +216,7 @@ function openSettings() {
 }
 
 document.getElementById("closeSettings").onclick = closeSettings;
+get("resetSettings").onclick = resetSettings;
 function closeSettings() {
         saveSettings();
         document.getElementById("settings").style.top = "100vh";
@@ -222,6 +238,9 @@ function populateSettings() {
         when.setMinutes(when.getMinutes() - when.getTimezoneOffset());
         get("countTime").value  = when.toISOString().slice(0,16);
         get("searchSelect").value = settings.searchEngine;
+        //The actual <select> elements are created inside of setupSearch()
+        get("secondsBox").checked = settings.clock.seconds;
+        get("24Box").checked = settings.clock.militaryTime;
 }
 
 function get(name){ //Alias for document.getElementById so I don't have to type it so much
@@ -240,6 +259,8 @@ function saveSettings() {
         settings.countdown.title = get("countTitleInput").value;
         settings.countdown.timeStamp = new Date(get("countTime").value).getTime();
         settings.searchEngine = parseInt(get("searchSelect").value);
+        settings.clock.seconds = get("secondsBox").checked;
+        settings.clock.militaryTime = get("24Box").checked;
         chrome.storage.sync.set({"settings": settings}, function() {
                 console.log("Saved Settings!");
         });
@@ -254,5 +275,12 @@ async function loadSettings() {
         });
         if(savedSettings != null && savedSettings != undefined){
                 settings = savedSettings;
+        } else {
+                settings = DEFAULT_SETTINGS;
         }
+}
+
+function resetSettings()  {
+        settings = DEFAULT_SETTINGS;
+        populateSettings();
 }

@@ -40,3 +40,9 @@ const COUNTDOWN_TITLE = "Movie Releases In:"; //Default Value: "Movie Releases I
 
 //Whether the California Wildfires widget will display. The widget still won't display if you aren't in California or if Califrornia is not on fire.
 const CALIFORNIA_WILDFIRES = false; //Default Value: true
+
+//Display the clock in 24-hour time
+const MILITARY_TIME = false; //Default Value: false
+
+//Display seconds on the clock
+const CLOCK_SECONDS = false; //Default Value: false
