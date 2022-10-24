@@ -33,7 +33,7 @@ units {
 }
 
 #weatherbox {
-	display: inline-block;
+	display: none;
 	margin-bottom: 5px;
 }
 
@@ -41,6 +41,7 @@ units {
 	text-align: left;
 	margin-bottom: 5px;
 	float: right;
+	display: none;
 }
 
 #fireBox {
