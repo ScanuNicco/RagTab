@@ -116,12 +116,18 @@ async function loadJSON(url){
 
 var weatherCode = 113; //Default to sunny
 async function getWeather() {
-        document.getElementById("temp").innerHTML = "--";
-        document.getElementById("location").innerHTML = "--";
-        var weather = await loadJSON('https://wttr.in/' + settings.weather.location + '?format=j1');
+        document.getElementById("temp").innerText = "--";
+        document.getElementById("location").innerText = "--";
+        try {
+                var weather = await loadJSON('https://wttr.in/' + settings.weather.location + '?format=j1');
+        } catch {
+                get("location").innerText = "An Error Occured.";
+                get("icon").src = "Icons/error.svg";
+                return;
+        }
         weatherCode = weather.current_condition[0].weatherCode;
-        document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
-        document.getElementById("location").innerHTML = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
+        document.getElementById("temp").innerText = weather.current_condition[0].temp_F + "&#176;";
+        document.getElementById("location").innerText = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
         var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
         var icons = iconsFile.condition;
         for (i = 0; i < icons.length; i++) {
