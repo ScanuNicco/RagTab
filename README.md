@@ -1,7 +1,7 @@
 # RagTab
 A thoughtfully designed and highly configurable Open Source new tab page.
 ![Screenshot of RagTab](.Screenshots/RagTabScreen.png)
-![Screenshot of RagTab](.
+![Screenshot of RagTab](.Screenshots/RagTabScreen2.png)
 # Packaging
 1) Ensure `web-ext` is installed on your system
 2) Navigate to the directory where RagTab is located
