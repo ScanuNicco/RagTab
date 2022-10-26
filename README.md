@@ -1,6 +1,12 @@
 # RagTab
 A thoughtfully designed and highly configurable Open Source new tab page.
-![Screenshot of RagTab](Screenshot.png)
+![Screenshot of RagTab](.Screenshots/RagTabScreen.png)
+![Screenshot of RagTab](.
+# Packaging
+1) Ensure `web-ext` is installed on your system
+2) Navigate to the directory where RagTab is located
+3) Run `web-ext build`
+4) Correct errors and warning if possible, then build againScreenshots/RagTabScreen2.png)
 
 # Why does this exist?
 There are several decent new tab extensions already available, but many lack customization and prompt you for paid subscriptions from time to time. RagTab is an open-source alternative to those extensions.
@@ -54,3 +60,9 @@ As long as you are familiar with JSON, you should be able to add any search engi
  ]
 ```
 5) Finally, you'll need to set SEARCH_ENGINE in config.js. Computers start counting at 0, not 1, so in my example I set SEARCH_ENGINE to 3 for Craigslist.
+
+# Packaging
+1) Ensure `web-ext` is installed on your system
+2) Navigate to the directory where RagTab is located
+3) Run `web-ext build`
+4) Correct errors and warning if possible, then build again

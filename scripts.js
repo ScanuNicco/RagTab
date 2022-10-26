@@ -90,7 +90,7 @@ function runClock() {
                 seconds = ":" + seconds;
         }
 
-        document.getElementById('clockbox').innerHTML = "" + nhour + ":" + nmin + seconds + ap + "";
+        document.getElementById('clockbox').innerText = "" + nhour + ":" + nmin + seconds + ap + "";
         if (settings.countdown.enabled) {
                 var count = new Date(settings.countdown.timeStamp);
                 var difference = count.getTime() - d.getTime();
@@ -126,7 +126,7 @@ async function getWeather() {
                 return;
         }
         weatherCode = weather.current_condition[0].weatherCode;
-        document.getElementById("temp").innerHTML = weather.current_condition[0].temp_F + "&#176;";
+        document.getElementById("temp").innerHTML = parseInt(weather.current_condition[0].temp_F) + "&#176;";
         document.getElementById("location").innerText = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
         var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
         var icons = iconsFile.condition;
