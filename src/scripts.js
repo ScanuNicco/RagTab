@@ -128,6 +128,10 @@ async function getWeather() {
         weatherCode = weather.current_condition[0].weatherCode;
         document.getElementById("temp").innerHTML = parseInt(weather.current_condition[0].temp_F) + "&#176;";
         document.getElementById("location").innerText = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
+        get("weatherHigh").innerHTML = parseInt(weather.weather[0].maxtempF) + "&#176;";
+        get("weatherLow").innerHTML = parseInt(weather.weather[0].mintempF) + "&#176;";
+        get("weatherHumid").innerText = weather.current_condition[0].humidity + "%";
+        get("weatherWind").innerText = weather.current_condition[0].windspeedMiles + "mph " + weather.current_condition[0].winddir16Point;
         var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
         var icons = iconsFile.condition;
         for (i = 0; i < icons.length; i++) {
