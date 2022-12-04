@@ -25,6 +25,7 @@
 	background: rgba(0, 0, 0, .3);
 	backdrop-filter: blur(10px);
 	padding: 10px;
+	transition: .5s;
 }
 
 units {
@@ -135,11 +136,7 @@ button:hover {
 	border-radius: 5px;
 }
 
-#icon:hover + #weatherInfo {
-	display: block;
-}
-
-#weatherInfo {
+#hoverInfo {
 	display: none;
 	color: black;
 	background: white;
@@ -148,6 +145,10 @@ button:hover {
 	left: 5px;
 	border-radius: 5px;
 	padding: 5px;
+	z-index: 5;
+	width: max-content;
+	transition: .5s ease opacity;
+	pointer-events: none;
 }
 
 #backgroundInfo {
@@ -279,4 +280,25 @@ h2 {
 	background: white;
 	color: black;
 	box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);
+}
+
+#location, #weatherData {
+	display: none;
+}
+
+.loadingIcon {
+	transform: rotate(0deg);
+	animation: spin 1s infinite;
+	height: 64px;
+	margin: 20px 60px;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }

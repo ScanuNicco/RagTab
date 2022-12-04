@@ -116,8 +116,9 @@ async function loadJSON(url){
 
 var weatherCode = 113; //Default to sunny
 async function getWeather() {
-        document.getElementById("temp").innerText = "--";
-        document.getElementById("location").innerText = "--";
+        get("weatherData").style.display = "none"
+        get("location").style.display = "none";
+        get("weatherLoading").style.display = "block";
         try {
                 var weather = await loadJSON('https://wttr.in/' + settings.weather.location + '?format=j1');
         } catch {
@@ -129,15 +130,20 @@ async function getWeather() {
         document.getElementById("temp").innerHTML = parseInt(weather.current_condition[0].temp_F) + "&#176;";
         document.getElementById("location").innerText = weather.nearest_area[0].areaName[0].value + ", " + weather.nearest_area[0].region[0].value;
         get("weatherHigh").innerHTML = parseInt(weather.weather[0].maxtempF) + "&#176;";
+        get("weatherHigh").onmouseover = function() {hoverBox('High', this)};
         get("weatherLow").innerHTML = parseInt(weather.weather[0].mintempF) + "&#176;";
+        get("weatherLow").onmouseover = function() {hoverBox('Low', this)};
         get("weatherHumid").innerText = weather.current_condition[0].humidity + "%";
+        get("weatherHumid").onmouseover = function() {hoverBox('Humidity', this)};
         get("weatherWind").innerText = weather.current_condition[0].windspeedMiles + "mph " + weather.current_condition[0].winddir16Point;
+        get("weatherWind").onmouseover = function() {hoverBox('Wind Speed', this)};
         var iconsFile = await loadJSON(WEATHER_CONFIG_URL);
         var icons = iconsFile.condition;
         for (i = 0; i < icons.length; i++) {
                 if (icons[i].code == weatherCode) {
-                        document.getElementById("icon").src = "Icons/" + icons[i].icon;
-                        document.getElementById("weatherInfo").innerText = icons[i].description;
+                        get("icon").src = "Icons/" + icons[i].icon;
+                        var description = icons[i].description;
+                        get("icon").onmouseover = function() {hoverBox(description, this)};
                 }
         }
         if (settings.wildfires && weather.nearest_area[0].region[0].value == "California") {
@@ -146,6 +152,9 @@ async function getWeather() {
         } else {
                 document.getElementById("fireBox").style.display = "none";
         }
+        get("weatherData").style.display = "flex";
+        get("location").style.display = "block";
+        get("weatherLoading").style.display = "none";
 }
 
 async function setupBackground() {
@@ -293,4 +302,24 @@ async function loadSettings() {
 function resetSettings()  {
         settings = DEFAULT_SETTINGS;
         populateSettings();
+}
+
+function hoverBox(message, elem) {
+        if(message == "") {
+                return;
+        }
+        hover = get("hoverInfo");
+        hover.style.opacity = "0";
+        hover.style.display = "block";
+        hover.innerText = message;
+        var elemPos = elem.getBoundingClientRect();
+        var hoverPos = hover.getBoundingClientRect();
+        if(elemPos.left + hoverPos.width < window.innerWidth){
+                hover.style.left = elemPos.left + "px";
+        } else {
+                hover.style.left = window.innerWidth - hoverPos.width + "px";
+        }
+        hover.style.top = elemPos.top - hoverPos.height + "px";
+        hover.style.opacity = "1";
+        elem.onmouseleave = function() {hover.style.opacity = "0";};
 }

@@ -1,6 +1,6 @@
 {
         "name": "RagTab",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "manifest_version": 2,
         "description": "A simple, open-source, configurable new-tab page",
         "icons": {
